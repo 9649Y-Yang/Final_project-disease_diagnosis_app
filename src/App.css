@@ -1,38 +1,55 @@
-.App {
-  text-align: center;
+#upload {
+  opacity: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#upload-label {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.image-area {
+  border: 2px dashed rgba(255, 255, 255, 0.7);
+  padding: 1rem;
+  position: relative;
 }
 
-.App-header {
-  background-color: #282c34;
+.image-area::before {
+  content: "Uploaded image result";
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8rem;
+  z-index: 1;
+}
+
+.image-area img {
+  z-index: 2;
+  position: relative;
+}
+
+body {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: #6e7285;
+  background-image: linear-gradient(147deg, #6e7285 0%, #d7dde8 100%);
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
   color: white;
+  text-align: center !important;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text {
+  color: white;
+  text-align: center !important;
+  font-size: 1.25rem;
+  font-weight: 300;
 }
