@@ -5,15 +5,22 @@ import "./App.css";
 import ErrorMessage from './components/ErrorMessage';
 
 function App() {
-  const [file, setFile] = useState(null) // initial value is null
+  const [file, setFile] = useState(null); // initial value is null
   // file, loading.. is var, setFile, setLoading... is function
-  const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+
+  // Create the variable to store the diagnose result
+  const [diagnose, setDiagnose] = useState();
 
   const fileInput = React.createRef();
 
-  console.log(file)
+  console.log(file);
+  // test
+  // const res = await axios.post("/routes", file );
+  //end test
+
     
   const handleImageUpload = (e) => {
     console.log(e);
@@ -38,27 +45,26 @@ function App() {
       setFile(null);
   }
 
-  // useEffect(() => {
-  //   if(loading){
-  //       const body = {
-  //           svg: file.xmlCode
-  //       }
-  //       axios.post("https://2fozw1dnf4.execute-api.ap-southeast-2.amazonaws.com/Dev/svg_to_alt_text/generate",
-  //           body).then(response => {
-  //               setLoading(false)
-  //               setResult(response.data)
-  //       }).catch(error => {
-  //           setLoading(false)
-  //           setError("Invalid XML File")
-  //       })
-  //   }
-  // }, [loading])
+  useEffect(() => {
+    if(loading){
+        axios.get('http://127.0.0.1:5000/gergerg').then(response => {
+                setLoading(false)
+                setResult(response.data)
+        }).catch(error => {
+            setLoading(false)
+            setError("Invalid XML File")
+        })
+    }
+  }, [loading])
 
   const handleReset = () => {
     setResult(null)
     setFile(null)
     setError(null)
   }
+
+
+  console.log(result)
 
 
   return (
@@ -96,6 +102,8 @@ function App() {
                 </>
             }
 
+            <Button onClick={() => setLoading(true)}> Send </Button>
+
           </div>
       </div>
     </div>
@@ -103,3 +111,6 @@ function App() {
 }
 
 export default App;
+
+
+// how to do a post requet in flask 
