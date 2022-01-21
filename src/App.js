@@ -11,19 +11,14 @@ function App() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  // Create the variable to store the diagnose result
-  const [diagnose, setDiagnose] = useState();
-
   const fileInput = React.createRef();
 
-  console.log(file);
   // test
   // const res = await axios.post("/routes", file );
   //end test
 
     
   const handleImageUpload = (e) => {
-    console.log(e);
     handleReset();
     e.preventDefault();
     const reader = new FileReader();
@@ -45,14 +40,18 @@ function App() {
       setFile(null);
   }
 
+
   useEffect(() => {
     if(loading){
-        axios.get('http://127.0.0.1:5000/gergerg').then(response => {
-                setLoading(false)
-                setResult(response.data)
+      console.log(file)
+
+      var body = {input_image: file}
+        axios.post(" http://127.0.0.1:5000/predict", body).then(response => {
+          setLoading(false)
+          setResult(response.data)
         }).catch(error => {
-            setLoading(false)
-            setError("Invalid XML File")
+          setLoading(false)
+          setError("Invalid XML File")
         })
     }
   }, [loading])
@@ -62,9 +61,6 @@ function App() {
     setFile(null)
     setError(null)
   }
-
-
-  console.log(result)
 
 
   return (
@@ -103,6 +99,14 @@ function App() {
             }
 
             <Button onClick={() => setLoading(true)}> Send </Button>
+
+
+            Result Section:
+            {/* todo: if the response type changes in backend, also need to change here */}
+            {
+              result && 
+              <img src={result.output_image} />
+            }
 
           </div>
       </div>
