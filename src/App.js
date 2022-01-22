@@ -88,8 +88,8 @@ function App() {
                     result && 
                     <div style= {{color:'white', fontStyle:'italic', position:'relative', left:'33%' }}>
                       Result Section:
-                      <p>Rugby: {result.prediction.Rugby}
-                      <br></br> Soccer: {result.prediction.Soccer}</p> 
+                      <p>Normal: {result.prediction.Normal}
+                      <br></br> Pneumonia: {result.prediction.Pneumonia}</p> 
                     </div> 
                   }
 

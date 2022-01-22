@@ -17,7 +17,7 @@ from flask import jsonify
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH = 'models/rugby_vs_football.h5'
+MODEL_PATH = 'models/CNN_Xray_v1.h5'
 
 def get_model():
     global model
@@ -56,8 +56,8 @@ def upload():
 
     response = {
         'prediction': {
-            'Rugby': predictions[0][0],
-            'Soccer': predictions[0][1]
+            'Normal': predictions[0][0],
+            'Pneumonia': predictions[0][1]
         }
     }
     # result = {
