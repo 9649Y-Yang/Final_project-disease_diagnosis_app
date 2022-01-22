@@ -31,8 +31,8 @@ get_model()
 
 
 def preprocess_image(image, target_size):
-    if image.mode != "RGB":
-        image = image.convert("RGB")
+    if image.mode != "L":
+        image = image.convert("L")
     image = image.resize(target_size)
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
@@ -51,13 +51,17 @@ def upload():
     image = Image.open(io.BytesIO(decoded))
 
 
-    processed_image = preprocess_image(image, target_size=(224, 224))
+    processed_image = preprocess_image(image, target_size=(200, 200))
+    processed_image = processed_image.reshape(1, 200,200,1)
+
     predictions = model.predict(processed_image).tolist()
+
+    print(predictions)
 
     response = {
         'prediction': {
-            'Normal': predictions[0][0],
-            'Pneumonia': predictions[0][1]
+            'Normal': predictions[0][0]
+            # 'Pneumonia': predictions[0][1]
         }
     }
     # result = {
