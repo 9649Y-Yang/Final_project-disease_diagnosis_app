@@ -13,11 +13,6 @@ function App() {
 
   const fileInput = React.createRef();
 
-  // test
-  // const res = await axios.post("/routes", file );
-  //end test
-
-    
   const handleImageUpload = (e) => {
     handleReset();
     e.preventDefault();
@@ -65,8 +60,8 @@ function App() {
 
   return (
       <div style={{margin: '35px'}}>
-        <h1 className="title">Disease Diagnosis App</h1>
-        <p className="text"> Please upload a picture to help us diagnose your disease.</p>
+        <h1 className="title">Pnueumonia Diagnosis App</h1>
+        <p className="text"> Please upload a picture (in .png or .jpg type) to help us diagnose pnueumonia.</p>
 
         <div className="row">
           <div className="col-lg-6 mx-auto">
@@ -74,7 +69,7 @@ function App() {
             // put logic inside {}
                 loading ? 
                 // the ? is: if loading is true, render the following div tag, if false, render the tag after :
-                <div style={{ alignSelf: 'center', marginTop: '35px'}}>
+                <div style={{ position: 'relative', left: '48%', alignSelf: 'center', marginTop: '35px'}}>
                     <Spinner animation="border" />
                 </div> : 
                 <>
@@ -87,7 +82,16 @@ function App() {
                       <ErrorMessage error={error}/> 
                   }
 
-                  <p style={{ color: 'white', fontStyle: 'italic'}} className="text-center">The image uploaded as shown below.</p>
+                  
+                  {/* todo: if the response type changes in backend, also need to change here */}
+                  {
+                    result && 
+                    <div style= {{color:'white', fontStyle:'italic', position:'relative', left:'33%' }}>
+                      Result Section:
+                      <p>Rugby: {result.prediction.Rugby}
+                      <br></br> Soccer: {result.prediction.Soccer}</p> 
+                    </div> 
+                  }
 
                   <div className="image-area mt-4">
                     {
@@ -98,15 +102,8 @@ function App() {
                 </>
             }
 
-            <Button onClick={() => setLoading(true)}> Send </Button>
+            <Button variant="dark" size="lg" onClick={() => setLoading(true)}> Diagnose! </Button>
 
-
-            Result Section:
-            {/* todo: if the response type changes in backend, also need to change here */}
-            {
-              result && 
-              <img src={result.output_image} />
-            }
 
           </div>
       </div>
@@ -116,5 +113,3 @@ function App() {
 
 export default App;
 
-
-// how to do a post requet in flask 

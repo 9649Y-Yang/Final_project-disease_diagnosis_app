@@ -4,6 +4,7 @@ import base64
 import numpy as np
 import keras
 from PIL import Image
+import re
 # Keras
 from keras.applications.imagenet_utils import preprocess_input, decode_predictions
 from tensorflow.keras.preprocessing.image import ImageDataGenerator, img_to_array
@@ -11,21 +12,12 @@ from keras.models import load_model
 from keras.preprocessing import image
 # Flask utils
 from flask import Flask, redirect, url_for, request, render_template
-# from werkzeug.utils import secure_filename
-# from gevent.pywsgi import WSGIServer
 from flask import jsonify
 
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
 MODEL_PATH = 'models/rugby_vs_football.h5'
-
-
-# # Load your trained model
-# model = load_model(MODEL_PATH)
-# # model._make_predict_function()  
-# model.predict()     # Necessary
-# print('Model loaded. Start serving...')
 
 def get_model():
     global model
@@ -38,15 +30,6 @@ print(" * Loading Keras model...")
 get_model()
 
 
-# def preprocess_image(image, target_size):
-#     buffer = io.BytesIO()
-#     imgdata = base64.b64decode(image)
-#     img = Image.open(io.BytesIO(imgdata))
-#     new_img  = img.resize(target_size)
-#     new_img  = img_to_array(new_img )
-#     new_img  = np.expand_dims(new_img , axis=0)
-#     return new_img 
-
 def preprocess_image(image, target_size):
     if image.mode != "RGB":
         image = image.convert("RGB")
@@ -58,16 +41,17 @@ def preprocess_image(image, target_size):
 # GET request endpoint
 @app.route('/predict', methods=['POST'])
 def upload():
-
-    request_image = request.json['input_image'] # data stream represents the image 
-    # processed_image = preprocess_image(request_image, target_size=(224, 224))
-
     message = request.get_json(force=True)
-    encoded = message['image']
-    decoded = base64.b64decode(encoded)
-    request_image = Image.open(io.BytesIO(decoded))
-    processed_image = preprocess_image(request_image, target_size=(224, 224))
 
+    encoded = message['input_image'] # data stream represents the image 
+
+    image_data = re.sub('^data:image/.+;base64,', '', encoded)
+
+    decoded = base64.b64decode(image_data)
+    image = Image.open(io.BytesIO(decoded))
+
+
+    processed_image = preprocess_image(image, target_size=(224, 224))
     predictions = model.predict(processed_image).tolist()
 
     response = {
@@ -81,8 +65,6 @@ def upload():
     # }
     return jsonify(response)
     
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

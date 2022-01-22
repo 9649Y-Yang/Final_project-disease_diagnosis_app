@@ -39,6 +39,14 @@ body {
   background-image: linear-gradient(147deg, #6e7285 0%, #d7dde8 100%);
 }
 
+.btn {
+  position: relative;
+  left: 42%;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+
 .title {
   font-size: 3.5rem;
   font-weight: 300;
