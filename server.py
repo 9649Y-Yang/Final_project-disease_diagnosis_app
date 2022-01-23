@@ -17,7 +17,7 @@ from flask import jsonify
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH = 'models/CNN_Xray_v1.h5'
+MODEL_PATH = 'models/CNN_Xray_v30.h5'
 
 def get_model():
     global model
@@ -51,8 +51,8 @@ def upload():
     image = Image.open(io.BytesIO(decoded))
 
 
-    processed_image = preprocess_image(image, target_size=(200, 200))
-    processed_image = processed_image.reshape(1, 200,200,1)
+    processed_image = preprocess_image(image, target_size=(224, 224))
+    processed_image = processed_image.reshape(-1, 224,224,1)
 
     predictions = model.predict(processed_image).tolist()
 
@@ -60,10 +60,10 @@ def upload():
 
     response = {
         'prediction': {
-            'Normal': predictions[0][0]
-            # 'Pneumonia': predictions[0][1]
+            'Normal': predictions[0][0],
+            'Pneumonia': predictions[0][1]
         }
-    }
+    }   
     # result = {
     #     'output_image': request_image
     # }
