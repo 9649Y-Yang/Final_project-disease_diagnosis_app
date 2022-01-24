@@ -17,7 +17,7 @@ from flask import jsonify
 app = Flask(__name__)
 
 # Model saved with Keras model.save()
-MODEL_PATH = 'models/CNN_Xray_v30.h5'
+MODEL_PATH = 'models/CNN_Xray_v31.h5'
 
 def get_model():
     global model

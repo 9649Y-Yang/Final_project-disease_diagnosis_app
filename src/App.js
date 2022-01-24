@@ -19,6 +19,8 @@ function App() {
     const reader = new FileReader();
     const file = e.target.files[0];
 
+    console.log(file);
+
     if (e.target.files[0]) {
       if (e.target.files[0].name.match(/\.(png|PNG|JPG|jpg|})$/)){
         reader.onload = (e) => {
@@ -88,8 +90,8 @@ function App() {
                     result && 
                     <div style= {{color:'white', fontStyle:'italic', position:'relative', left:'33%' }}>
                       Result Section:
-                      <p>Normal: {result.prediction.Normal}
-                      <br></br> Pneumonia: {result.prediction.Pneumonia}</p> 
+                      <p>Normal: {parseFloat(result.prediction.Normal*100).toFixed(2)+'%'}
+                      <br></br> Pneumonia: {parseFloat(result.prediction.Pneumonia*100).toFixed(2)+'%'}</p> 
                     </div> 
                   }
 
