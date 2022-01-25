@@ -1,3 +1,6 @@
+# Fianl App looks like:
+![pneumonia_diagnosis_app_60s](https://github.com/9649Y-Yang/final_project-disease_diagnosis_app/blob/master/output%20screenshots/pneumonia_diagnosis_app_60s.gif)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
